@@ -17,9 +17,9 @@ RUN set -x \
 	# Install, update & upgrade packages
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
-		wget=1.21-1+deb11u1 \
-		ca-certificates=20210119 \
-		lib32z1=1:1.2.11.dfsg-2+deb11u2 \
+		wget \
+		ca-certificates \
+		lib32z1 \
 	&& mkdir -p "${STEAMAPPDIR}" \
 	# Add entry script
 	&& { \
@@ -33,9 +33,9 @@ RUN set -x \
 	&& chmod +x "${HOMEDIR}/entry.sh" \
 	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" "${HOMEDIR}/${STEAMAPP}_update.txt" \
 	# Clean up
-	&& rm -rf /var/lib/apt/lists/* 
+	&& rm -rf /var/lib/apt/lists/*
 
-FROM build_stage AS bullseye-base
+FROM build_stage AS bookworm-base
 
 ENV SRCDS_FPSMAX=300 \
 	SRCDS_TICKRATE=128 \
@@ -58,7 +58,8 @@ ENV SRCDS_FPSMAX=300 \
 	SRCDS_WORKSHOP_START_MAP=0 \
 	SRCDS_HOST_WORKSHOP_COLLECTION=0 \
 	SRCDS_WORKSHOP_AUTHKEY="" \
-	ADDITIONAL_ARGS=""
+	ADDITIONAL_ARGS="" \
+	SKIN_PLUGINS=false
 
 # Switch to user
 USER ${USER}
@@ -72,10 +73,10 @@ EXPOSE 27015/tcp \
 	27015/udp \
 	27020/udp
 
-FROM bullseye-base AS bullseye-metamod
+FROM bookworm-base AS bookworm-metamod
 
 ENV METAMOD_VERSION 1.11
 
-FROM bullseye-metamod AS bullseye-sourcemod
+FROM bookworm-metamod AS bookworm-sourcemod
 
 ENV SOURCEMOD_VERSION 1.11
