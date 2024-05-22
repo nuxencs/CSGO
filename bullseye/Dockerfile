@@ -33,7 +33,7 @@ RUN set -x \
 	&& chmod +x "${HOMEDIR}/entry.sh" \
 	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" "${HOMEDIR}/${STEAMAPP}_update.txt" \
 	# Clean up
-	&& rm -rf /var/lib/apt/lists/* 
+	&& rm -rf /var/lib/apt/lists/*
 
 FROM build_stage AS bullseye-base
 
@@ -59,6 +59,7 @@ ENV SRCDS_FPSMAX=300 \
 	SRCDS_HOST_WORKSHOP_COLLECTION=0 \
 	SRCDS_WORKSHOP_AUTHKEY="" \
 	ADDITIONAL_ARGS=""
+	SKIN_PLUGINS=false \
 
 # Switch to user
 USER ${USER}
