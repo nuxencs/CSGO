@@ -1,8 +1,8 @@
 # Supported tags and respective `Dockerfile` links
 
-- [`base`, `latest` (*bullseye/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bullseye/Dockerfile)
-- [`metamod` (*bullseye/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bullseye/Dockerfile)
-- [`sourcemod` (*bullseye/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bullseye/Dockerfile)
+- [`base`, `latest` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
+- [`metamod` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
+- [`sourcemod` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
 
 ## How to use this image
 
