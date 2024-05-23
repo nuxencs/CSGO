@@ -35,7 +35,7 @@ fi
 # Install Weapons
 if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/weapons.smx" ]; then
 	wget -qO wpns.zip $(curl -s https://api.github.com/repos/kgns/weapons/releases/latest | grep download | grep weapons | cut -d\" -f4) && \
-	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" wpns.zip && \
+	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" wpns.zip -x "LICENSE" "README.md" && \
 	rm wpns.zip
 
 	# Remove prefix & set float increment size
@@ -46,7 +46,7 @@ fi
 # Install Gloves
 if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/gloves.smx" ]; then
 	wget -qO glvs.zip $(curl -s https://api.github.com/repos/kgns/gloves/releases/latest | grep download | grep gloves | cut -d\" -f4) && \
-	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" glvs.zip && \
+	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" glvs.zip -x "LICENSE" "README.md" && \
 	rm glvs.zip
 
 	# Remove prefix & set float increment size
@@ -57,6 +57,19 @@ fi
 # Changing FollowCSGOServerGuidelines to "no" for skin plugins
 if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ]; then
 	sed -i -e 's:"FollowCSGOServerGuidelines"\t"yes":"FollowCSGOServerGuideLines"\t"no":g' "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/configs/core.cfg"
+fi
+
+# Append sourcemod admins if sourcemod is installed and env isn't empty
+if  [ ! -z "$SOURCEMOD_VERSION" ] && [ -n "$SOURCEMOD_ADMINS" ]; then
+    admins_simple="${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/configs/admins_simple.ini"
+
+    if [ -f "${admins_simple}" ]; then
+        for steamid in $(echo $SOURCEMOD_ADMINS | sed "s/,/ /g"); do
+            if ! grep -q "\"$steamid\"" $admins_simple; then
+                echo "\"$steamid\" \"z\"" >> $admins_simple
+            fi
+        done
+    fi
 fi
 
 # Is the config missing?

@@ -65,6 +65,7 @@ SRCDS_HOST_WORKSHOP_COLLECTION=0
 SRCDS_WORKSHOP_AUTHKEY="" (required to use host_workshop_map)
 ADDITIONAL_ARGS="" (Pass additional arguments to srcds. Make sure to escape correctly!)
 SKIN_PLUGINS=false (true or false possible, determines if skin plugins should be installed)
+SOURCEMOD_ADMINS="" (List of comma-separated Steam IDs that you want to be sourcemod admins)
 ```
 
 ### Config

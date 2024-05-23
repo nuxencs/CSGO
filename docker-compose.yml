@@ -26,6 +26,7 @@ services:
       - SRCDS_WORKSHOP_AUTHKEY=""
       - ADDITIONAL_ARGS=""
       - SKIN_PLUGINS=false
+      - SOURCEMOD_ADMINS=""
     volumes:
       - /path/to/your/location/csgo-dedicated:/home/steam/csgo-dedicated/
     ports:
