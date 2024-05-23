@@ -1,0 +1,35 @@
+services:
+  csgo-docker:
+    image: ghcr.io/nuxencs/csgo-docker:latest
+    container_name: csgo-docker
+    user: 1000:1000
+    environment:
+      - SRCDS_TOKEN="changeme"
+      - SRCDS_RCONPW="changeme"
+      - SRCDS_PW="changeme"
+      - SRCDS_PORT=27015
+      - SRCDS_TV_PORT=27020
+      - SRCDS_NET_PUBLIC_ADDRESS="0"
+      - SRCDS_IP="0"
+      - SRCDS_LAN="0"
+      - SRCDS_FPSMAX=300
+      - SRCDS_TICKRATE=128
+      - SRCDS_MAXPLAYERS=14
+      - SRCDS_STARTMAP="de_dust2"
+      - SRCDS_REGION=3
+      - SRCDS_MAPGROUP="mg_active"
+      - SRCDS_GAMETYPE=0
+      - SRCDS_GAMEMODE=1
+      - SRCDS_HOSTNAME="CSGO Server"
+      - SRCDS_WORKSHOP_START_MAP=0
+      - SRCDS_HOST_WORKSHOP_COLLECTION=0
+      - SRCDS_WORKSHOP_AUTHKEY=""
+      - ADDITIONAL_ARGS=""
+      - SKIN_PLUGINS=false
+      - SOURCEMOD_ADMINS=""
+    volumes:
+      - /path/to/your/location/csgo-dedicated:/home/steam/csgo-dedicated/
+    ports:
+      - "27015:27015/tcp"           # TCP
+      - "27015:27015/udp"           # UDP
+      - "27020:27020/udp"           # UDP

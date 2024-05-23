@@ -1,8 +1,8 @@
 # Supported tags and respective `Dockerfile` links
 
-- [`base`, `latest` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
-- [`metamod` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
-- [`sourcemod` (*bookworm/Dockerfile*)](https://github.com/nuxencs/CSGO-Docker/blob/master/bookworm/Dockerfile)
+- [`base`, `latest` (*bullseye/Dockerfile*)](https://github.com/nuxencs/csgo-docker/blob/master/bullseye/Dockerfile)
+- [`metamod` (*bullseye/Dockerfile*)](https://github.com/nuxencs/csgo-docker/blob/master/bullseye/Dockerfile)
+- [`sourcemod` (*bullseye/Dockerfile*)](https://github.com/nuxencs/csgo-docker/blob/master/bullseye/Dockerfile)
 
 ## How to use this image
 
@@ -11,7 +11,7 @@
 Running on the *host* interface (recommended):<br/>
 
 ```console
-docker run -d --net=host --name=csgo-dedicated -e SRCDS_TOKEN={YOURTOKEN} cm2network/csgo
+docker run -d --net=host --name=csgo-dedicated -e SRCDS_TOKEN={YOURTOKEN} nuxencs/csgo-docker
 ```
 
 Running using a bind mount for data persistence on container recreation:
@@ -19,13 +19,13 @@ Running using a bind mount for data persistence on container recreation:
 ```console
 mkdir -p $(pwd)/csgo-data
 chmod 777 $(pwd)/csgo-data # Makes sure the directory is writeable by the unprivileged container user
-docker run -d --net=host -v $(pwd)/csgo-data:/home/steam/csgo-dedicated/ --name=csgo-dedicated -e SRCDS_TOKEN={YOURTOKEN} cm2network/csgo
+docker run -d --net=host -v $(pwd)/csgo-data:/home/steam/csgo-dedicated/ --name=csgo-dedicated -e SRCDS_TOKEN={YOURTOKEN} nuxencs/csgo-docker
 ```
 
 Running multiple instances (increment SRCDS_PORT and SRCDS_TV_PORT):
 
 ```console
-docker run -d --net=host --name=csgo-dedicated2 -e SRCDS_PORT=27016 -e SRCDS_TV_PORT=27021 -e SRCDS_TOKEN={YOURTOKEN} cm2network/csgo
+docker run -d --net=host --name=csgo-dedicated2 -e SRCDS_PORT=27016 -e SRCDS_TV_PORT=27021 -e SRCDS_TOKEN={YOURTOKEN} nuxencs/csgo-docker
 ```
 
 `SRCDS_TOKEN` **is required to be listed & reachable. Generate one here using AppID `730`:**
@@ -65,6 +65,7 @@ SRCDS_HOST_WORKSHOP_COLLECTION=0
 SRCDS_WORKSHOP_AUTHKEY="" (required to use host_workshop_map)
 ADDITIONAL_ARGS="" (Pass additional arguments to srcds. Make sure to escape correctly!)
 SKIN_PLUGINS=false (true or false possible, determines if skin plugins should be installed)
+SOURCEMOD_ADMINS="" (List of comma-separated Steam IDs that you want to be sourcemod admins)
 ```
 
 ### Config
@@ -79,16 +80,16 @@ If you want to learn more about configuring a CS:GO server check this [documenta
 
 ## Image Variants
 
-The `csgo` images come in three flavors, each designed for a specific use case.
+The `csgo-docker` images come in three flavors, each designed for a specific use case.
 
-### `csgo:latest`
+### `csgo-docker:latest`
 
 This is the defacto image. If you are unsure about what your needs are, you probably want to use this one. It is a bare-minimum CSGO dedicated server containing no 3rd party plugins.<br/>
 
-### `csgo:metamod`
+### `csgo-docker:metamod`
 
 This is a specialized image. It contains the plugin environment [Metamod:Source](https://www.sourcemm.net) which can be found in the addons directory. You can find additional plugins [here](https://www.sourcemm.net/plugins).
 
-### `csgo:sourcemod`
+### `csgo-docker:sourcemod`
 
 This is another specialized image. It contains both [Metamod:Source](https://www.sourcemm.net) and the popular server plugin [SourceMod](https://www.sourcemod.net) which can be found in the addons directory. [SourceMod](https://www.sourcemod.net) supports a wide variety of additional plugins that can be found [here](https://www.sourcemod.net/plugins.php). This image comes bundled with skin plugins and a fix for not being able to connect to CS:GO servers.

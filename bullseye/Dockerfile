@@ -1,14 +1,13 @@
 ###########################################################
 # Dockerfile that builds a CSGO Gameserver
 ###########################################################
-FROM cm2network/steamcmd:root as build_stage
+FROM cm2network/steamcmd:root-bullseye as build_stage
 
-LABEL maintainer="walentinlamonos@gmail.com"
+LABEL maintainer="theonenuxen@proton.me"
 
 ENV STEAMAPPID 740
 ENV STEAMAPP csgo
 ENV STEAMAPPDIR "${HOMEDIR}/${STEAMAPP}-dedicated"
-ENV DLURL https://raw.githubusercontent.com/CM2Walki/CSGO
 
 COPY etc/entry.sh "${HOMEDIR}/entry.sh"
 COPY etc/csgo "/etc/csgo"
@@ -18,24 +17,16 @@ RUN set -x \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends --no-install-suggests \
 		wget \
+		unzip \
 		ca-certificates \
 		lib32z1 \
 	&& mkdir -p "${STEAMAPPDIR}" \
-	# Add entry script
-	&& { \
-		echo '@ShutdownOnFailedCommand 1'; \
-		echo '@NoPromptForPassword 1'; \
-		echo 'force_install_dir '"${STEAMAPPDIR}"''; \
-		echo 'login anonymous'; \
-		echo 'app_update '"${STEAMAPPID}"''; \
-		echo 'quit'; \
-	   } > "${HOMEDIR}/${STEAMAPP}_update.txt" \
 	&& chmod +x "${HOMEDIR}/entry.sh" \
-	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" "${HOMEDIR}/${STEAMAPP}_update.txt" \
+	&& chown -R "${USER}:${USER}" "${HOMEDIR}/entry.sh" "${STEAMAPPDIR}" \
 	# Clean up
 	&& rm -rf /var/lib/apt/lists/*
 
-FROM build_stage AS bookworm-base
+FROM build_stage AS bullseye-base
 
 ENV SRCDS_FPSMAX=300 \
 	SRCDS_TICKRATE=128 \
@@ -59,7 +50,8 @@ ENV SRCDS_FPSMAX=300 \
 	SRCDS_HOST_WORKSHOP_COLLECTION=0 \
 	SRCDS_WORKSHOP_AUTHKEY="" \
 	ADDITIONAL_ARGS="" \
-	SKIN_PLUGINS=false
+	SKIN_PLUGINS=false \
+	SOURCEMOD_ADMINS=""
 
 # Switch to user
 USER ${USER}
@@ -73,10 +65,10 @@ EXPOSE 27015/tcp \
 	27015/udp \
 	27020/udp
 
-FROM bookworm-base AS bookworm-metamod
+FROM bullseye-base AS bullseye-metamod
 
 ENV METAMOD_VERSION 1.11
 
-FROM bookworm-metamod AS bookworm-sourcemod
+FROM bullseye-metamod AS bullseye-sourcemod
 
 ENV SOURCEMOD_VERSION 1.11

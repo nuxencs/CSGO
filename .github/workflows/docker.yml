@@ -8,11 +8,11 @@ on:
       - 'v*'
     paths:
       - '.github/workflows/docker.yml'
-      - 'bookworm/**'
+      - 'bullseye/**'
   pull_request:
     paths:
       - '.github/workflows/docker.yml'
-      - 'bookworm/**'
+      - 'bullseye/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -56,9 +56,9 @@ jobs:
         id: build_base
         uses: docker/build-push-action@v5
         with:
-          context: ./bookworm
-          file: ./bookworm/Dockerfile
-          target: bookworm-base
+          context: ./bullseye
+          file: ./bullseye/Dockerfile
+          target: bullseye-base
           tags: |
             ${{ env.REGISTRY_IMAGE }}:latest
             ${{ env.REGISTRY_IMAGE }}:base
@@ -69,9 +69,9 @@ jobs:
         id: build_metamod
         uses: docker/build-push-action@v5
         with:
-          context: ./bookworm
-          file: ./bookworm/Dockerfile
-          target: bookworm-metamod
+          context: ./bullseye
+          file: ./bullseye/Dockerfile
+          target: bullseye-metamod
           tags: ${{ env.REGISTRY_IMAGE }}:metamod
           push: true
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }}:metamod
@@ -80,9 +80,9 @@ jobs:
         id: build_sourcemod
         uses: docker/build-push-action@v5
         with:
-          context: ./bookworm
-          file: ./bookworm/Dockerfile
-          target: bookworm-sourcemod
+          context: ./bullseye
+          file: ./bullseye/Dockerfile
+          target: bullseye-sourcemod
           tags: ${{ env.REGISTRY_IMAGE }}:sourcemod
           push: true
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }}:sourcemod
