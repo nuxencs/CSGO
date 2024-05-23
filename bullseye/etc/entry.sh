@@ -19,21 +19,21 @@ if  [ ! -z "$SOURCEMOD_VERSION" ] && [ ! -d "${STEAMAPPDIR}/${STEAMAPP}/addons/s
 fi
 
 # Install NoLobbyReservation
-if  [ ! -z "$SOURCEMOD_VERSION" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/nolobbyreservation.smx"]; then
+if  [ ! -z "$SOURCEMOD_VERSION" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/nolobbyreservation.smx" ]; then
 	wget -qO nlr.zip https://github.com/nuxencs/NoLobbyReservation/releases/latest/download/NoLobbyReservation.zip && \
 	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" nlr.zip && \
 	rm nlr.zip
 fi
 
 # Install PTaH
-if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/PTaH.ext.2.csgo.so"]; then
+if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/extensions/PTaH.ext.2.csgo.so" ]; then
 	wget -qO ptah.zip $(curl -s https://api.github.com/repos/komashchenko/PTaH/releases/latest | grep download | grep linux | cut -d\" -f4) && \
 	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" ptah.zip && \
 	rm ptah.zip
 fi
 
 # Install Weapons
-if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/weapons.smx"]; then
+if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/weapons.smx" ]; then
 	wget -qO wpns.zip $(curl -s https://api.github.com/repos/kgns/weapons/releases/latest | grep download | grep weapons | cut -d\" -f4) && \
 	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" wpns.zip && \
 	rm wpns.zip
@@ -44,7 +44,7 @@ if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${
 fi
 
 # Install Gloves
-if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/gloves.smx"]; then
+if  [ ! -z "$SOURCEMOD_VERSION" ] && [ "$SKIN_PLUGINS" == "true" ] && [ ! -f "${STEAMAPPDIR}/${STEAMAPP}/addons/sourcemod/plugins/gloves.smx" ]; then
 	wget -qO glvs.zip $(curl -s https://api.github.com/repos/kgns/gloves/releases/latest | grep download | grep gloves | cut -d\" -f4) && \
 	unzip -d "${STEAMAPPDIR}/${STEAMAPP}" glvs.zip && \
 	rm glvs.zip
@@ -93,9 +93,8 @@ rcon_password	+rcon_password "${SRCDS_RCONPW}"
 EOM
 	# if autoexec is present, drop overwritten arguments here (example: SRCDS_PW & SRCDS_RCONPW)
 	bash "${STEAMAPPDIR}/srcds_run" -game "${STEAMAPP}" -console \
-				-steam_dir "${STEAMCMDDIR}" \
-				-steamcmd_script "${HOMEDIR}/${STEAMAPP}_update.txt" \
 				-usercon \
+				-norestart \
 				+fps_max "${SRCDS_FPSMAX}" \
 				-tickrate "${SRCDS_TICKRATE}" \
 				-port "${SRCDS_PORT}" \
@@ -119,9 +118,8 @@ EOM
 else
 	# If no autoexec is present, use all parameters
 	bash "${STEAMAPPDIR}/srcds_run" -game "${STEAMAPP}" -console \
-				-steam_dir "${STEAMCMDDIR}" \
-				-steamcmd_script "${HOMEDIR}/${STEAMAPP}_update.txt" \
 				-usercon \
+				-norestart \
 				+fps_max "${SRCDS_FPSMAX}" \
 				-tickrate "${SRCDS_TICKRATE}" \
 				-port "${SRCDS_PORT}" \
